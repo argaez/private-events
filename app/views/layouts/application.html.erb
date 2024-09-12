@@ -1,27 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrivateEvents</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    
+    <!-- CSRF Meta Tags -->
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- Bootstrap CSS -->
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", integrity: "sha384-GLxGB14ua5E+PfzFO5yDjsBxmk5D8Cw8jW/d9qgLDkGzjPiZ1lPvDBsIcr7RyMNd", crossorigin: "anonymous" %>
+
+    <!-- Custom Stylesheets -->
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    
+    <!-- JavaScript -->
     <%= javascript_importmap_tags %>
 
+    <style>
+      html, body {
+        height: 100%; /* Ocupa el 100% de la altura */
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      .container {
+        flex: 1; /* Este hace que el contenido principal ocupe el espacio disponible */
+      }
+      footer {
+        background-color: #f8f9fa;
+        text-align: center;
+        padding: 10px 0;
+      }
+    </style>
   </head>
 
   <body>
-  <% if signed_in? %>
-    <li><%= link_to "Profile", edit_user_registration_path %></li>
-    <li><%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete } %></li>
-  <% else %>
-    <li><%= link_to "Sign up", new_user_registration_path %></li>
-    <li><%= link_to "Login", new_user_session_path %></li>
-  <% end %>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">PrivateEvents</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <% if signed_in? %>
+              <li class="nav-item">
+                <%= link_to "Profile", edit_user_registration_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link" %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to "Sign up", new_user_registration_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <!-- Main Content -->
+    <div class="container mt-4">
+      <% if notice.present? %>
+        <div class="alert alert-info"><%= notice %></div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="alert alert-danger"><%= alert %></div>
+      <% end %>
+      
+      <%= yield %>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start">
+      <div class="text-center p-3">
+        &copy; <%= Time.current.year %> PrivateEvents. All rights reserved.
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle (with Popper) -->
+    <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js", integrity: "sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+9p9e9b+jNHEHgaAMbo7FL0pj0Ixd", crossorigin: "anonymous" %>
   </body>
 </html>
