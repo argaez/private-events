@@ -36,6 +36,10 @@
         <%= f.date_field :birthday, class: "form-control", placeholder: "Select your birthday" %>
       </div>
 
+      <div class="form-group mb-3">
+        <%= f.hidden_field :active, value: true %>
+      </div>
+
       <!-- Password field -->
       <div class="form-group mb-3">
         <%= f.label :password, class: "form-label" %>
