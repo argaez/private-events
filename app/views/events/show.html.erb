@@ -1,0 +1,21 @@
+<h1><%= @event.name %></h1>
+
+<p><strong>Description:</strong> <%= @event.description %></p>
+
+<p><strong>Date:</strong> <%= @event.date.strftime("%B %d, %Y - %I:%M %p") if @event.date.present? %></p>
+
+<p><strong>Address:</strong> <%= @event.event_address %></p>
+
+<p><strong>Creators:</strong>
+  <ul>
+    <% @event.creators.each do |creator| %>
+      <li><%= creator.full_name %></li>
+    <% end %>
+  </ul>
+</p>
+<% if @event.creators.include?(current_user) %>
+  <%= link_to 'Edit', edit_event_path(@event), class: "btn btn-warning btn-sm" if @event.creators.include?(current_user)%>
+  <%= button_to 'Delete', @event, method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
+<% end %>
+
+<%= link_to 'Back to Events', events_path, class: "btn btn-secondary" %>

@@ -1,6 +1,6 @@
 <h1>Events</h1>
 
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -8,27 +8,36 @@
       <th>Date</th>
       <th>Address</th>
       <th>Creators</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @events.each do |event| %>
       <tr>
         <td><%= event.name %></td>
-        <td><%= event.description %></td>
-        <td><%= event.date %></td>
+        <td><%= truncate(event.description, length: 50) %></td>
+        <td><%= event.date.strftime("%B %d, %Y - %I:%M %p") if event.date.present? %></td>
         <td><%= event.event_address %></td>
         <td>
-          <% if event.creators.any? %>
-            <ul>
-              <% event.creators.each do |creator| %>
-                <li><%= creator.email %></li>
-              <% end %>
-            </ul>
-          <% else %>
-            No creators
+        <% if event.creators.any? %>
+          <ul>
+            <% event.creators.each do |creator| %>
+              <li><%= creator.full_name %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          No creators
+        <% end %>
+        </td>
+        <td>
+          <%= link_to 'Show', event, class: "btn btn-primary btn-sm" %>
+          <% if event.creators.include?(current_user) %>
+            <%= link_to 'Edit', edit_event_path(event), class: "btn btn-warning btn-sm" %>
           <% end %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= link_to 'New Event', new_event_path, class: "btn btn-success" %>
