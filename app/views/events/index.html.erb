@@ -19,15 +19,17 @@
         <td><%= event.date.strftime("%B %d, %Y - %I:%M %p") if event.date.present? %></td>
         <td><%= event.event_address %></td>
         <td>
-        <% if event.creators.any? %>
-          <ul>
-            <% event.creators.each do |creator| %>
-              <li><%= creator.full_name %></li>
-            <% end %>
-          </ul>
-        <% else %>
-          No creators
-        <% end %>
+          <% if event.creators.any? %>
+            <ul>
+              <% event.creators.each do |creator| %>
+                <li>
+                  <%= link_to creator.full_name, creator_events_path(creator) %>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            No creators
+          <% end %>
         </td>
         <td>
           <%= link_to 'Show', event, class: "btn btn-primary btn-sm" %>
@@ -41,3 +43,4 @@
 </table>
 
 <%= link_to 'New Event', new_event_path, class: "btn btn-success" %>
+
