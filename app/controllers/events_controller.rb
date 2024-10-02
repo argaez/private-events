@@ -4,10 +4,19 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :authorize_creator, only: [:edit, :update, :destroy]
 
-  def index
-      @events = Event.all
-  end
+  #def index
+      #@events = Event.all
+  #end
 
+  def index
+    if params[:creator_id]
+      @creator = Creator.find(params[:creator_id])
+      @events = @creator.events
+    else
+      @events = Event.all
+    end
+  end
+  
     # GET /events/:id
   # Muestra un evento específico
   def show

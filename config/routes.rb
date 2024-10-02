@@ -15,5 +15,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "events#index"
   resources :events
+
+  resources :creators, only: [:show] do
+    resources :events, only: [:index]  # Ruta para acceder a los eventos de un creator, como /creators/:id/events
+  end
   
 end
