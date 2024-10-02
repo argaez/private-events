@@ -8,5 +8,7 @@ class Creator < User
   #validates :active, acceptance: { accept: true, message: "Creator must be active" }}
   
   # Puedes agregar otros métodos o validaciones específicas
+
+  
    
 end
